@@ -4,8 +4,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.User;
+import com.example.finance_tracker.modules.user.entities.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
 
-    @Autowired
     private UserRepository userRepository;
 
     @Override
@@ -23,11 +23,11 @@ public class UserService implements UserDetailsService {
         Optional<User> user = userRepository.findByEmail(username);
 
         if (user.isPresent()) {
-            var userObj = user.get();
-            return User.builder()
-                    .username(userObj.getUsername())
-                    .password(userObj.getPassword())
-                    .build();
+            User userObj = user.get();
+            UserBuilder builder = org.springframework.security.core.userdetails.User
+                    .withUsername(userObj.getUsername());
+            builder.password(userObj.getPassword());
+            return builder.build();
 
         } else {
             throw new UsernameNotFoundException("User not found");

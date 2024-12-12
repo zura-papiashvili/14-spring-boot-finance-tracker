@@ -16,40 +16,52 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+        private final UserRepository userRepository;
+        private final PasswordEncoder passwordEncoder;
+        private final JwtService jwtService;
 
-    private final AuthenticationManager authenticationManager;
+        private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
+        public AuthenticationResponse register(RegisterRequest request) {
 
-        userRepository.save(user);
+                System.out.println("Registering user: " + request.getEmail());
+                System.out.println("Registering user: " + request.getEmail());
+                System.out.println("Registering user: " + request.getEmail());
+                System.out.println("Registering user: " + request.getEmail());
+                var user = User.builder()
+                                .firstName(request.getFirstName())
+                                .lastName(request.getLastName())
+                                .email(request.getEmail())
+                                .password(passwordEncoder.encode(request.getPassword()))
+                                .role(Role.USER)
+                                .build();
 
-        var jwtToken = jwtService.generateToken(user);
+                userRepository.save(user);
 
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
-    }
+                var jwtToken = jwtService.generateToken(user);
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                System.out.println(jwtToken);
 
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+                return AuthenticationResponse.builder()
+                                .token(jwtToken)
+                                .build();
+        }
 
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
-    }
+        public AuthenticationResponse authenticate(AuthenticationRequest request) {
+                System.out.println("hello");
+                System.out.println(request.getEmail());
+                System.out.println(request.getPassword());
+                authenticationManager.authenticate(
+                                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                System.out.println(1);
+                var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+                System.out.println(user);
+                var jwtToken = jwtService.generateToken(user);
+                System.out.println(jwtToken);
+
+                return AuthenticationResponse.builder()
+                                .token(jwtToken)
+                                .build();
+        }
 
 }
