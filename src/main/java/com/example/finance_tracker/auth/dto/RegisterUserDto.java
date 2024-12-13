@@ -1,4 +1,4 @@
-package com.example.finance_tracker.common.dto;
+package com.example.finance_tracker.auth.dto;
 
 import com.example.finance_tracker.common.validators.ValidPassword;
 

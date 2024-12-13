@@ -30,14 +30,6 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
             else if (!Character.isLetterOrDigit(c))
                 hasSpecialChar = true;
         }
-        System.out.println(1111);
-        System.out.println(1111);
-        System.out.println(1111);
-        System.out.println(1111);
-        System.out.println("hasUpperCase: " + hasUpperCase);
-        System.out.println("hasLowerCase: " + hasLowerCase);
-        System.out.println("hasDigit: " + hasDigit);
-        System.out.println("hasSpecialChar: " + hasSpecialChar);
 
         return hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
     }

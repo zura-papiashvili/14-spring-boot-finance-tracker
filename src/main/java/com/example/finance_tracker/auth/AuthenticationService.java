@@ -9,9 +9,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.finance_tracker.common.dto.LoginUserDto;
-import com.example.finance_tracker.common.dto.RegisterUserDto;
-import com.example.finance_tracker.common.dto.VerifyUserDto;
+import com.example.finance_tracker.auth.dto.LoginUserDto;
+import com.example.finance_tracker.auth.dto.RegisterUserDto;
+import com.example.finance_tracker.auth.dto.VerifyUserDto;
 import com.example.finance_tracker.config.EmailService;
 import com.example.finance_tracker.modules.user.UserRepository;
 import com.example.finance_tracker.modules.user.entities.Role;

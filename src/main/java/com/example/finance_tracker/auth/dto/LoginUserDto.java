@@ -1,4 +1,4 @@
-package com.example.finance_tracker.common.dto;
+package com.example.finance_tracker.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

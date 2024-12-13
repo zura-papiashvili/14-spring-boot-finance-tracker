@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.finance_tracker.common.dto.LoginUserDto;
-import com.example.finance_tracker.common.dto.RegisterUserDto;
-import com.example.finance_tracker.common.dto.VerifyUserDto;
+import com.example.finance_tracker.auth.dto.LoginUserDto;
+import com.example.finance_tracker.auth.dto.RegisterUserDto;
+import com.example.finance_tracker.auth.dto.VerifyUserDto;
 import com.example.finance_tracker.common.responses.LoginResponse;
 import com.example.finance_tracker.config.JwtService;
 import com.example.finance_tracker.modules.user.entities.User;
