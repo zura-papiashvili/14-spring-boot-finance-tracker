@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.finance_tracker.auth.dto.LoginUserDto;
 import com.example.finance_tracker.auth.dto.RegisterUserDto;
 import com.example.finance_tracker.auth.dto.VerifyUserDto;
+import com.example.finance_tracker.common.exception.UserAlreadyExistsException;
 import com.example.finance_tracker.config.EmailService;
 import com.example.finance_tracker.modules.user.UserRepository;
 import com.example.finance_tracker.modules.user.entities.Role;
@@ -30,6 +31,16 @@ public class AuthenticationService {
         private final AuthenticationManager authenticationManager;
 
         public User signup(RegisterUserDto input) {
+
+                // Check if user exists with the provided email
+                Boolean userExists = checkIfUserExistsWithEmail(input.getEmail());
+
+                System.out.println("User exists: " + userExists); // This will log the boolean value
+
+                if (userExists) {
+                        // Throw an exception if user already exists
+                        throw new UserAlreadyExistsException("User already exists with email: " + input.getEmail());
+                }
                 User user = new User(
                                 input.getFirstName(),
                                 input.getLastName(),
@@ -125,6 +136,11 @@ public class AuthenticationService {
                 Random random = new Random();
                 int code = 100000 + random.nextInt(900000);
                 return String.valueOf(code);
+        }
+
+        public Boolean checkIfUserExistsWithEmail(String email) {
+                Optional<User> user = userRepository.findByEmail(email);
+                return user.isPresent(); // Returns true if user exists, false if not
         }
 
 }
