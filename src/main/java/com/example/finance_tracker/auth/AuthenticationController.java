@@ -1,6 +1,7 @@
 package com.example.finance_tracker.auth;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class AuthenticationController {
     private final JwtService jwtService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<User> register(@RequestBody @Validated RegisterUserDto registerUserDto) {
         User user = authenticationService.signup(registerUserDto);
         return ResponseEntity.ok(user);
     }

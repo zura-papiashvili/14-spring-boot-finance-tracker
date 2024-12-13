@@ -5,7 +5,6 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
-import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,8 +18,8 @@ public class SwaggerConfig {
                 return new OpenAPI()
                                 .addSecurityItem(createSecurityRequirement()) // Add security requirement for JWT
                                 .components(createComponents()) // Define the security scheme
-                                .info(new io.swagger.v3.oas.models.info.Info().title("API Documentation")
-                                                .version("3.0"));
+                                .info(new io.swagger.v3.oas.models.info.Info().title("Finance TrackerAPI Documentation")
+                                                .version("1.0"));
         }
 
         // Create the security requirement for the JWT token

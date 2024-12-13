@@ -40,7 +40,7 @@ public class AuthenticationService {
                 user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(5));
                 user.setEnabled(false);
                 user.setRole(Role.USER);
-                sendVerificationEmail(user);
+                // sendVerificationEmail(user);
 
                 return userRepository.save(user);
         }
