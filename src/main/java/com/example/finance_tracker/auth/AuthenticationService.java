@@ -101,7 +101,7 @@ public class AuthenticationService {
                         }
                         user.setVerificationCode(generateVerificationCode());
                         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(5));
-                        sendVerificationEmail(user);
+                        // sendVerificationEmail(user);
                         userRepository.save(user);
                 } else {
                         throw new RuntimeException("User not found");
