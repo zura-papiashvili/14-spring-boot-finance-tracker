@@ -35,8 +35,6 @@ public class AuthenticationService {
                 // Check if user exists with the provided email
                 Boolean userExists = checkIfUserExistsWithEmail(input.getEmail());
 
-                System.out.println("User exists: " + userExists); // This will log the boolean value
-
                 if (userExists) {
                         // Throw an exception if user already exists
                         throw new UserAlreadyExistsException("User already exists with email: " + input.getEmail());

@@ -2,13 +2,17 @@ package com.example.finance_tracker.config.aws;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
@@ -29,9 +33,16 @@ public class StorageService {
     public String uploadFile(MultipartFile file) {
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         File fileObj = convertMultiPartToFile(file);
-        s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
-        fileObj.delete();
 
+        try {
+            // Upload file to S3
+            s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
+        } finally {
+            // Safely delete the file after upload
+            if (fileObj.exists() && !fileObj.delete()) {
+                System.err.println("Failed to delete temporary file: " + fileObj.getAbsolutePath());
+            }
+        }
         return fileName;
     }
 
@@ -48,19 +59,37 @@ public class StorageService {
     }
 
     public String deleteFile(String fileName) {
-        s3Client.deleteObject(bucketName, fileName);
-        return fileName + " removed...";
+        try {
+            s3Client.deleteObject(bucketName, fileName);
+        } catch (Exception e) {
+            log.error("Error deleting file", e);
+        }
+        return "File deleted successfully";
     }
 
     private File convertMultiPartToFile(MultipartFile file) {
-        File convertedFile = new File(file.getOriginalFilename());
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
-            fileOutputStream.write(file.getBytes());
-        } catch (Exception e) {
-            log.error("Error converting multipart file to file", e);
+            // Create temp file in the system's temp directory
+            File tempFile = File.createTempFile("upload_", "_" + file.getOriginalFilename());
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.write(file.getBytes());
+            }
+            return tempFile;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to convert MultipartFile to File", e);
         }
-        return convertedFile;
+    }
+
+    public String generatePresignedUploadUrl(String fileName) {
+        // / Set URL expiration time (e.g., 15 minutes)
+        Date expiration = new Date(System.currentTimeMillis() + 15 * 60 * 1000);
+
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, fileName)
+                .withMethod(HttpMethod.GET)
+                .withExpiration(expiration);
+
+        String fileUrl = s3Client.generatePresignedUrl(request).toString();
+        return fileUrl;
     }
 
 }

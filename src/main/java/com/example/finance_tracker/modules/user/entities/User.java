@@ -42,8 +42,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "avatar_url")
-    private String avatarUrl;
+    @Column(name = "avatar_name")
+    private String avatarName;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
