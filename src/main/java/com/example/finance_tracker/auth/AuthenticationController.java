@@ -13,7 +13,7 @@ import com.example.finance_tracker.auth.dto.LoginUserDto;
 import com.example.finance_tracker.auth.dto.RegisterUserDto;
 import com.example.finance_tracker.auth.dto.VerifyUserDto;
 import com.example.finance_tracker.common.responses.LoginResponse;
-import com.example.finance_tracker.config.JwtService;
+import com.example.finance_tracker.config.jwt.JwtService;
 import com.example.finance_tracker.modules.user.entities.User;
 
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.finance_tracker.config;
+package com.example.finance_tracker.config.jwt;
 
 import java.io.IOException;
 

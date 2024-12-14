@@ -13,7 +13,7 @@ import com.example.finance_tracker.auth.dto.LoginUserDto;
 import com.example.finance_tracker.auth.dto.RegisterUserDto;
 import com.example.finance_tracker.auth.dto.VerifyUserDto;
 import com.example.finance_tracker.common.exception.UserAlreadyExistsException;
-import com.example.finance_tracker.config.EmailService;
+import com.example.finance_tracker.config.email.EmailService;
 import com.example.finance_tracker.modules.user.UserRepository;
 import com.example.finance_tracker.modules.user.entities.Role;
 import com.example.finance_tracker.modules.user.entities.User;

@@ -1,4 +1,4 @@
-package com.example.finance_tracker.config;
+package com.example.finance_tracker.config.email;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

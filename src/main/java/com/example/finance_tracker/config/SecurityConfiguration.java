@@ -13,6 +13,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.example.finance_tracker.config.jwt.JwtAuthenticationFilter;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
